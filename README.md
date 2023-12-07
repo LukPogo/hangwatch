@@ -1,3 +1,4 @@
+
 # hangwatch
 To jest repozytorium projektu interaktywnego haczyka który podaje informacje czy ktoś znajduje się w sali kołowej. 
 Projekt składa się z modelu wieszaka na klucze , kodu wgrywanego do płytki ESP oraz kodu prostej strony internetowej,
@@ -13,31 +14,55 @@ Całość działa w ten sposób , że osoba przebywająca w pomieszczeniu musi p
 ## Endpoint
 
   **Endpoint  *"/hooks"***  
-Program pobiera z płytki informacje na temat haczyka tzn sali w której się znajduje oraz jego stanu .Obsługuje żądanie typu POST  i GET . Po otrzymaniu  żądania , endpoint pobiera dane JSON z żądania i aktualizuje  zmienną *"state"* przechowująca informacje czy w jakiejś sali ktoś się znajduje . 
+Program pobiera z płytkek ESP informacje na temat haczyków tzn  id płytek , sali w której się znajdują oraz ich stanu .Obsługuje żądanie typu POST  i GET . Po otrzymaniu  żądania , endpoint pobiera dane JSON z żądania i aktualizuje  zmienną *"state"* przechowująca informacje czy w jakiejś sali ktoś się znajduje . 
 Tu również tutaj wysyłana będzie rutynowa  informacja od płytki sprawdzająca czy urządzenie działa. 
 
 Jeżeli w sali znajduje się ktoś i powiesił klucze na haczyku to na stronie internetowej pojawia się wartość 
  ```json
 {
-	"name": "warsztat027",
-	"state": "hanged"
+ "1234" {
+			"name": "warsztat027",
+			"state": "hanged",
+			"time" : "jakaś wartość"
+        }
 }
 ```
 Natomiast jeżeli nikogo nie ma to pojawia się informacja 
- ```json	   
+ ```json
 {
-	"name": "warsztat027",
-	"state": "empty"
+ "1234" {
+			"name": "warsztat027",
+			"state": "empty",
+			"time" : "jakaś wartość"
+        }
 }
 ```
 Informacja ta pojawi się po 10 sekundach  od zdjęcia kluczy z wieszaka.  
 Możliwa jest również sytuacja kiedy pojawi się awaria. Wtedy na stronie pojawi się informacja
-  ```json
+ ```json
 {
-	"name": "warsztat027",
-	"state": "offline"
+ "1234" {
+			"name": "warsztat027",
+			"state": "offline",
+			"time" : "jakaś wartość"
+        }
 }
+```
+## Uruchomienie  servera
+
+1. Odpalamy terminal , który może odpalić nasz serwer np. może być to Visual Studio Code.
+2. W terminalu wpisujemy
+ ```python 
+	  "pip install -r requirements.txt"
  ```
+ Plik requirements.txt znajduje się w repozytorium . 		
+  
+3. Po czym wpisujemy w terminalu 
+ ```python 
+	  "python serve.py"
+```
+W ten sposób odpalimy nasz program.
+
 
 
     
