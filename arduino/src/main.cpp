@@ -2,14 +2,18 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
-
+#define LED  33
+#define BUTTON 25
 
 const char* ssid = "Telefon MI";
 const char* password = "Barcelona1";
 
-const char* serverAddress = "http://192.168.43.212:5000/get_gpio_state";
+const char* SERVER_ADDRESS = "http://192.168.43.212:5000/hooks";
 
-void setup(){
+const char* BOARD_ID = "1234";
+const char* MIEJSCE = "warsztat 027";
+void setup()
+{
     Serial.begin(115200);
     delay(1000);
 
@@ -20,40 +24,74 @@ void setup(){
     while(WiFi.status() != WL_CONNECTED){
         Serial.print(".");
         delay(100);
+        
     }
-
-    
+    pinMode(LED,OUTPUT);
+    pinMode(BUTTON,INPUT_PULLUP);
 }
-
-void loop() {
-    // Odczytaj stan GPIO
-   int gpioState = 10 ;
+int send_status_request(int buttonState) 
+{
+    
     DynamicJsonDocument jsonDoc(200);
-    jsonDoc["gpioState"] = gpioState;
-    String payload;
-    serializeJson(jsonDoc,payload);
-    // Wyślij żądanie POST na serwer Flask
-    HTTPClient http;
-    http.begin(serverAddress);
-    http.addHeader("Content-Type", "application/json");
-     int httpResponseCode = http.sendRequest("GET", payload);
-    if(httpResponseCode > 0)
+    jsonDoc["place"] =  MIEJSCE;
+    if(buttonState==LOW)
     {
-        Serial.printf("HTTP Response code: %d\n",httpResponseCode );
-        String response = http.getString();
-        DynamicJsonDocument jsonDoc(200);
-        deserializeJson(jsonDoc, response);
-        String success = jsonDoc["success"].as<String>();
-        Serial.println(response);
-
+        jsonDoc["state"] = "hanged";
     }
     else
     {
-        Serial.printf("HTTP Request failed %s\n", http.errorToString(httpResponseCode).c_str());
-
+        jsonDoc["state"]="empty";
     }
-  //Serial.print(code);
-    // Poczekaj przez określony czas
+    jsonDoc["board_id"] = BOARD_ID;
+    String payload;
+    serializeJson(jsonDoc, payload);
+    // Wyślij żądanie POST na serwer Flask
+    HTTPClient http;
+    http.begin(SERVER_ADDRESS);
+    http.addHeader("Content-Type", "application/json");
+    int httpResponseCode = http.sendRequest("POST", payload);
     http.end();
     delay(1000);
+    return httpResponseCode;
 }
+
+
+void loop() 
+{   
+    int buttonState = digitalRead(BUTTON);
+    if(buttonState==LOW)   
+    {
+        digitalWrite(LED,HIGH);
+    }
+    else
+    {
+        digitalWrite(LED,LOW);
+    }
+    int httpResponseCode = send_status_request(buttonState);
+    if(httpResponseCode !=200)
+    {
+        int buttonState = digitalRead(BUTTON);
+        if(buttonState==LOW) 
+        { 
+            while (1) 
+            {
+                digitalWrite(LED, HIGH);
+                delay(500);
+                digitalWrite(LED, LOW);
+                delay(500);
+                buttonState = digitalRead(BUTTON);
+                httpResponseCode = send_status_request(buttonState);
+                if(httpResponseCode==200 )
+                {
+                    break;
+                }
+            }
+            if (httpResponseCode==200)
+            {
+                digitalWrite(LED,HIGH);
+            }
+        }            
+       
+    }
+}
+
