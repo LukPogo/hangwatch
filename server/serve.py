@@ -37,8 +37,7 @@ def check_state():
     for board_id, board_state in state.items():
         if (time.time() - board_state['time']) > 7200:
             board_state['state'] = 'offline'
-        elif (time.time() - board_state['time']) > 10:
-            board_state['state'] = 'empty'    
+           
     
     
     return jsonify(state)
