@@ -37,7 +37,7 @@ Natomiast jeżeli nikogo nie ma to pojawia się informacja
         }
 }
 ```
-Informacja ta pojawi się po 10 sekundach  od zdjęcia kluczy z wieszaka.  
+  
 Możliwa jest również sytuacja kiedy pojawi się awaria. Wtedy na stronie pojawi się informacja
  ```json
 {
