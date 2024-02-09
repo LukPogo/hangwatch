@@ -50,16 +50,16 @@ Możliwa jest również sytuacja kiedy pojawi się awaria. Wtedy na stronie poja
 ```
 ## Uruchomienie  servera
 
-1. Odpalamy terminal , który może odpalić nasz serwer np. może być to Visual Studio Code.
+1. Odpalamy terminal w folderze `server`, który może odpalić nasz serwer np. może być to Visual Studio Code.
 2. W terminalu wpisujemy
  ```python 
 	  "pip install -r requirements.txt"
  ```
  Plik requirements.txt znajduje się w repozytorium . 		
   
-3. Po czym wpisujemy w terminalu 
+1. Po czym wpisujemy w terminalu 
  ```python 
-	  "python serve.py"
+	  "python3 serve.py"
 ```
 W ten sposób odpalimy nasz program.
 
