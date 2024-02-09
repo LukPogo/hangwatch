@@ -1,3 +1,4 @@
+import argparse
 import time
 from flask import Flask, request,  jsonify
 
@@ -44,4 +45,7 @@ def check_state():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    parser = argparse.ArgumentParser(description='Server for receiving state from boards')
+    parser.add_argument('--port', type=int, default=5000, help='Port to run the server on')
+    args = parser.parse_args()
+    app.run(host="0.0.0.0", port=args.port, debug=True)
