@@ -13,7 +13,7 @@ Całość działa w ten sposób , że osoba przebywająca w pomieszczeniu musi p
 Żeby całość działała prawidłowo należy powiesić model na ścianie lub na magnesie , podłączyć do prądu o napięciu 5V.
 ## Endpoint
 
-  **Endpoint  *"/hooks"***  
+  **Endpoint  **`hooks`***  
 Program pobiera z płytkek ESP informacje na temat haczyków tzn  id płytek , sali w której się znajdują oraz ich stanu .Obsługuje żądanie typu POST  i GET . Po otrzymaniu  żądania , endpoint pobiera dane JSON z żądania i aktualizuje  zmienną *"state"* przechowująca informacje czy w jakiejś sali ktoś się znajduje . 
 Tu również tutaj wysyłana będzie rutynowa  informacja od płytki sprawdzająca czy urządzenie działa. 
 
@@ -52,25 +52,23 @@ Możliwa jest również sytuacja kiedy pojawi się awaria. Wtedy na stronie poja
 
 1. Odpalamy terminal w folderze `server`, który może odpalić nasz serwer np. może być to Visual Studio Code.
 2. W terminalu wpisujemy
- ```python 
+ ```bash 
 	  "pip install -r requirements.txt"
  ```
- Plik requirements.txt znajduje się w repozytorium . 		
-  
-1. Po czym wpisujemy w terminalu 
- ```python 
-	  "python3 serve.py"
+ Plik requirements.txt znajduje się w repozytorium.
+
+3. Wpisujemy w terminalu
+
+```bash 
+"python3 serve.py"
 ```
-W ten sposób odpalimy nasz program.
 
+### Uruchomienie w dockerze
 
+```bash
+cd serve
+docker build --tag hangwatch .
+docker run -p 8080:80 hangwatch
+```
 
-    
-
-	 
- 
-    
-        
-     
-
-
+Aby uruchomić w tle laneży dodać flagę `-d --restart=always`.
