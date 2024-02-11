@@ -21,19 +21,22 @@ Jeżeli w sali znajduje się ktoś i powiesił klucze na haczyku to na stronie i
  ```json
 {
  "1234" {
-			"name": "warsztat027",
+			"place": "warsztat027",
 			"state": "hanged",
-			"time" : "jakaś wartość"
+			"time" : "1707679919"
         }
 }
 ```
+
+Czas jest podany w sekundach
+
 Natomiast jeżeli nikogo nie ma to pojawia się informacja 
  ```json
 {
  "1234" {
-			"name": "warsztat027",
+			"place": "warsztat027",
 			"state": "empty",
-			"time" : "jakaś wartość"
+			"time" : "1707679919"
         }
 }
 ```
@@ -42,9 +45,9 @@ Możliwa jest również sytuacja kiedy pojawi się awaria. Wtedy na stronie poja
  ```json
 {
  "1234" {
-			"name": "warsztat027",
+			"place": "warsztat027",
 			"state": "offline",
-			"time" : "jakaś wartość"
+			"time" : "1707679919"
         }
 }
 ```
