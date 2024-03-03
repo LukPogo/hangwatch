@@ -2,7 +2,7 @@
 
 import argparse
 import time
-from flask import Flask, request,  jsonify
+from flask import Flask, request,  jsonify, make_response
 
 app = Flask(__name__, template_folder='template')
 
@@ -40,10 +40,10 @@ def check_state():
     for board_id, board_state in state.items():
         if (time.time() - board_state['time']) > 7200:
             board_state['state'] = 'offline'
-           
-    
-    
-    return jsonify(state)
+
+    response = make_response(jsonify(state))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
 
 
 if __name__ == '__main__':
