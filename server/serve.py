@@ -21,7 +21,7 @@ def receive_data():
         if board_id not in state:
             state[board_id] = {"state_change_time": lastUpdate}
 
-        if state[board_id]['state'] != received_state:
+        if state[board_id].get('state') != received_state:
             state[board_id]['state'] = received_state
             state[board_id]['state_change_time'] = lastUpdate
         state[board_id]['place'] = content['place']
