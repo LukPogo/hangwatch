@@ -23,7 +23,8 @@ Jeżeli w sali znajduje się ktoś i powiesił klucze na haczyku to na stronie i
  "1234" {
 			"place": "warsztat027",
 			"state": "hanged",
-			"time" : "1707679919"
+			"last_activity_time" : "1707679919",
+			"state_change_time" : "1707679019"
         }
 }
 ```
@@ -36,7 +37,8 @@ Natomiast jeżeli nikogo nie ma to pojawia się informacja
  "1234" {
 			"place": "warsztat027",
 			"state": "empty",
-			"time" : "1707679919"
+			"last_activity_time" : "1707679919",
+			"state_change_time" : "1707679019"
         }
 }
 ```
@@ -47,7 +49,8 @@ Możliwa jest również sytuacja kiedy pojawi się awaria. Wtedy na stronie poja
  "1234" {
 			"place": "warsztat027",
 			"state": "offline",
-			"time" : "1707679919"
+			"last_activity_time" : "1707679919",
+			"state_change_time" : "1707679019"
         }
 }
 ```

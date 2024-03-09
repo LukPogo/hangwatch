@@ -19,12 +19,13 @@ def receive_data():
         received_state = content['state']
         board_id = content['board_id']
         if board_id not in state:
-            state[board_id] = {}
+            state[board_id] = {"state_change_time": lastUpdate}
 
-         
-        state[board_id]['state'] = received_state
+        if state[board_id]['state'] != received_state:
+            state[board_id]['state'] = received_state
+            state[board_id]['state_change_time'] = lastUpdate
         state[board_id]['place'] = content['place']
-        state[board_id]['time'] = lastUpdate
+        state[board_id]['last_activity_time'] = lastUpdate
         
         print(f"Board ID: {board_id}, Place: {state[board_id]['place']}, State: {state[board_id]['state']}")
         
@@ -38,8 +39,9 @@ def receive_data():
 def check_state():
     global state
     for board_id, board_state in state.items():
-        if (time.time() - board_state['time']) > 7200:
+        if (time.time() - board_state['last_activity_time']) > 7200:
             board_state['state'] = 'offline'
+            board_state['state_change_time'] = time.time()
 
     response = make_response(jsonify(state))
     response.headers['Access-Control-Allow-Origin'] = '*'
