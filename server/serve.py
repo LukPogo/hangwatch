@@ -39,9 +39,10 @@ def receive_data():
 def check_state():
     global state
     for board_id, board_state in state.items():
-        if (time.time() - board_state['last_activity_time']) > 7200:
-            board_state['state'] = 'offline'
-            board_state['state_change_time'] = time.time()
+        if board_state.get('last_activity_time') is not None:
+            if (time.time() - board_state['last_activity_time']) > 7200:
+                board_state['state'] = 'offline'
+                board_state['state_change_time'] = time.time()
 
     response = make_response(jsonify(state))
     response.headers['Access-Control-Allow-Origin'] = '*'
